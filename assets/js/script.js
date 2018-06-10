@@ -37,7 +37,15 @@ function getTrack() {
                 console.dir(trackResults);
                 trackResults.forEach(function(item) {
                     console.log(trackID);
-                    resultsSection.innerHTML += `<p>${item.track.track_name} by ${item.track.artist_name}<button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button></p>`;
+                    resultsSection.innerHTML += `<div class="col-4 offset-1">
+                                                    <p>${item.track.track_name}</p>
+                                                 </div>
+                                                 <div class="col-4">
+                                                    <p>${item.track.artist_name}</p>
+                                                 </div>
+                                                 <div class="col-3">
+                                                    <button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                 </div>`;
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -53,40 +61,45 @@ function getTrack() {
 function getArtist() {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
-    trackID = 
-    $.ajax({
-            type: "GET",
-            data: {
-                apikey: "16099f064260947071709a4bc6421891",
-                q_artist: searchTerms,
-                format: "jsonp",
-                callback: "jsonp_callback",
-                page_size: 50,
-                s_artist_rating: "DESC",
+    trackID =
+        $.ajax({
+                type: "GET",
+                data: {
+                    apikey: "16099f064260947071709a4bc6421891",
+                    q_artist: searchTerms,
+                    format: "jsonp",
+                    callback: "jsonp_callback",
+                    page_size: 50,
+                    s_artist_rating: "DESC",
 
-            },
+                },
 
-            url: "https://api.musixmatch.com/ws/1.1/artist.search",
-            dataType: "jsonp",
-            jsonpCallback: 'jsonp_callback',
-            contentType: 'application/json',
-            success: function(data) {
-                console.log(data);
-                var artistResults = data.message.body.artist_list;
-                console.dir(artistResults);
-                artistResults.forEach(function(item) {
-                    resultsSection.innerHTML += `<p>${item.artist.artist_name}<button onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button></p>`;
-                });
+                url: "https://api.musixmatch.com/ws/1.1/artist.search",
+                dataType: "jsonp",
+                jsonpCallback: 'jsonp_callback',
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data);
+                    var artistResults = data.message.body.artist_list;
+                    console.dir(artistResults);
+                    artistResults.forEach(function(item) {
+                        resultsSection.innerHTML += `<div class="col-4 offset-2">
+                                                        <p>${item.artist.artist_name}</p>
+                                                     </div>
+                                                     <div class="col-4">
+                                                        <button onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button>
+                                                     </div>`;
+                    });
 
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
             }
-        }
 
-    );
+        );
 }
 
 function getLyrics(trackID) {
@@ -110,7 +123,9 @@ function getLyrics(trackID) {
                 console.log(data);
                 var lyricResults = data.message.body.lyrics.lyrics_body;
                 console.dir(lyricResults);
-                resultsSection.innerHTML += `<p>${lyricResults}</p>`;
+                resultsSection.innerHTML += `<div class="col-10 offset-1">
+                                                ${lyricResults}
+                                             </div>`;
 
 
 
@@ -119,6 +134,7 @@ function getLyrics(trackID) {
 
     );
 }
+
 function getAlbumList(artistID) {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -141,10 +157,15 @@ function getAlbumList(artistID) {
                 var albumList = data.message.body.album_list;
                 console.dir(albumList);
                 albumList.forEach(function(item) {
-                    resultsSection.innerHTML += `<p>${item.album.album_name}<button onclick="getTrackList(${item.album.album_id})">Click here for a list of tracks</button></p>`;
+                    resultsSection.innerHTML += `<div class="col-4 offset-2">
+                                                    <p>${item.album.album_name}</p>
+                                                 </div>
+                                                 <div class="col-4">
+                                                    <button onclick="getTrackList(${item.album.album_id})">Click here for a list of tracks</button>
+                                                 </div>`;
                 });
-                
-    
+
+
 
 
             }
@@ -175,7 +196,12 @@ function getTrackList(albumID) {
                 var trackResults = data.message.body.track_list;
                 console.dir(trackResults);
                 trackResults.forEach(function(item) {
-                    resultsSection.innerHTML += `<p>${item.track.track_name}<button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button></p>`;
+                    resultsSection.innerHTML += `<div class="col-4 offset-2">
+                                                    <p>${item.track.track_name}</p>
+                                                 </div>
+                                                 <div class="col-4">
+                                                    <button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                 </div>`
                 });
 
 
