@@ -92,11 +92,12 @@ function getArtist() {
                     });
 
                 },
-                
+
             }
 
         );
 }
+
 
 function getLyrics(trackID) {
     var resultsSection = document.getElementById("results");
@@ -117,8 +118,18 @@ function getLyrics(trackID) {
             contentType: 'application/json',
             success: function(data) {
                 console.log(data);
-                var lyricResults = data.message.body.lyrics.lyrics_body;
-                console.dir(lyricResults);
+                try {
+                    var lyricResults = data.message.body.lyrics.lyrics_body;
+                }
+                catch (err) {
+                    resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                <div class="col-10 lyric-container">
+                                                <p>Sorry, there are no lyrics available for this song.</p>
+                                                </div>
+                                             </div>`;
+                                             return;
+                    
+                }
                 resultsSection.innerHTML += `<div class="row justify-content-center">
                                                 <div class="col-10 lyric-container">
                                                 ${lyricResults}
