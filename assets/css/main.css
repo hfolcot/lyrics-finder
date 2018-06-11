@@ -12,6 +12,7 @@ body {
     text-align: center;
     margin-top: 20px;
     letter-spacing: 3px;
+    
 }
 
 .search-box {
@@ -23,10 +24,15 @@ input {
     margin: 10px;
 }
 
-.btn-result {
+.btn-result,
+.btn-srch{
     background-color: #26547C;
     border-color: #26547C;
     margin: 5px auto 5px;
+}
+
+.results {
+    margin-bottom: 25px;
 }
 
 .btn-result-mobile {
