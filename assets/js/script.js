@@ -37,22 +37,20 @@ function getTrack() {
                 console.dir(trackResults);
                 trackResults.forEach(function(item) {
                     console.log(trackID);
-                    resultsSection.innerHTML += `<div class="col-4 offset-1">
-                                                    <p>${item.track.track_name}</p>
-                                                 </div>
-                                                 <div class="col-4">
-                                                    <p>${item.track.artist_name}</p>
-                                                 </div>
-                                                 <div class="col-3">
-                                                    <button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
-                                                 </div>`;
+                    resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                    <div class="col-4 result-container">
+                                                        <p>${item.track.track_name}</p>
+                                                    </div>
+                                                    <div class="col-4 result-container">
+                                                        <p>${item.track.artist_name}</p>
+                                                    </div>
+                                                    <div class="col-3 result-container">
+                                                        <button class="btn btn-primary btn-result" onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                    </div>
+                                                </div>`;
                 });
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            }
+
         }
 
     );
@@ -83,20 +81,18 @@ function getArtist() {
                     var artistResults = data.message.body.artist_list;
                     console.dir(artistResults);
                     artistResults.forEach(function(item) {
-                        resultsSection.innerHTML += `<div class="col-4 offset-2">
-                                                        <p>${item.artist.artist_name}</p>
-                                                     </div>
-                                                     <div class="col-4">
-                                                        <button onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button>
-                                                     </div>`;
+                        resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                        <div class="col-4 result-container">
+                                                            <p>${item.artist.artist_name}</p>
+                                                        </div>
+                                                        <div class="col-4 result-container">
+                                                            <button class="btn btn-primary btn-result" onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button>
+                                                        </div>
+                                                    </div>`;
                     });
 
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                }
+                
             }
 
         );
@@ -123,8 +119,10 @@ function getLyrics(trackID) {
                 console.log(data);
                 var lyricResults = data.message.body.lyrics.lyrics_body;
                 console.dir(lyricResults);
-                resultsSection.innerHTML += `<div class="col-10 offset-1">
+                resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                <div class="col-10 lyric-container">
                                                 ${lyricResults}
+                                                </div>
                                              </div>`;
 
 
@@ -157,12 +155,14 @@ function getAlbumList(artistID) {
                 var albumList = data.message.body.album_list;
                 console.dir(albumList);
                 albumList.forEach(function(item) {
-                    resultsSection.innerHTML += `<div class="col-4 offset-2">
-                                                    <p>${item.album.album_name}</p>
-                                                 </div>
-                                                 <div class="col-4">
-                                                    <button onclick="getTrackList(${item.album.album_id})">Click here for a list of tracks</button>
-                                                 </div>`;
+                    resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                    <div class="col-4 result-container">
+                                                        <p>${item.album.album_name}</p>
+                                                    </div>
+                                                    <div class="col-4 result-container">
+                                                        <button class="btn btn-primary btn-result" onclick="getTrackList(${item.album.album_id})">Click here for a list of tracks</button>
+                                                    </div>
+                                                </div>`;
                 });
 
 
@@ -196,12 +196,14 @@ function getTrackList(albumID) {
                 var trackResults = data.message.body.track_list;
                 console.dir(trackResults);
                 trackResults.forEach(function(item) {
-                    resultsSection.innerHTML += `<div class="col-4 offset-2">
-                                                    <p>${item.track.track_name}</p>
-                                                 </div>
-                                                 <div class="col-4">
-                                                    <button onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
-                                                 </div>`
+                    resultsSection.innerHTML += `<div class="row justify-content-center">
+                                                    <div class="col-4 result-container">
+                                                        <p>${item.track.track_name}</p>
+                                                    </div>
+                                                    <div class="col-4 result-container">
+                                                        <button class="btn btn-primary btn-result" onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                    </div>
+                                                </div>`
                 });
 
 

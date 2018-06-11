@@ -14,24 +14,24 @@
 
 <body>
     <header>
-        <div class="row">
-            <div class="col-4 offset-4 page-title">
+        <div class="row justify-content-center">
+            <div class="col-5 page-title">
                 <h1>Lyrics Finder</h1>
             </div>
         </div>
     </header>
     <section>
-        <div class="row">
-            <div class="col-4 offset-4 search-box">
+        <div class="row justify-content-center">
+            <div class="col-10 search-box">
                 <form onsubmit="return false">
-                    <input type="search" name="q" id="search" placeholder="Enter search terms here"></br>
+                    <input type="search" name="q" id="search" placeholder="Enter search terms here"><br>
                     <input type="radio" name="search" value="artist" id="artistRadioButton" checked>Artist
                     <input type="radio" name="search" value="song" id="songRadioButton">Song<br>
-                    <button onclick="checkRadio()">Search</button>
+                    <button class="btn btn-primary btn-result" onclick="checkRadio()">Search</button>
                 </form>
             </div>
         </div>
-        <div class="row" id="results">
+        <div id="results">
         </div>
     </section>
 </body>
