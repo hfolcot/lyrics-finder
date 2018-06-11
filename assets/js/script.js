@@ -1,6 +1,7 @@
-var searchTerms;
-var trackID;
+var searchTerms; //The value entered into the search box.
+var trackID; //The ID created in the getTrack function for use in the getLyrics function. 
 
+//checkRadio is run when the user clicks on the Search button
 function checkRadio() {
     searchTerms = document.getElementById("search").value;
 
@@ -12,6 +13,7 @@ function checkRadio() {
     }
 }
 
+//getTrack is run when the search is for a song.
 function getTrack() {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -46,6 +48,7 @@ function getTrack() {
                                                     </div>
                                                     <div class="col-3 result-container">
                                                         <button class="btn btn-primary btn-result" onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                        <button class="btn btn-primary btn-result-mobile" onclick="getLyrics(${item.track.track_id})">Lyrics</button>
                                                     </div>
                                                 </div>`;
                 });
@@ -56,6 +59,7 @@ function getTrack() {
     );
 }
 
+//getArtist is run when the user has searched for an artist.
 function getArtist() {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -87,6 +91,7 @@ function getArtist() {
                                                         </div>
                                                         <div class="col-4 result-container">
                                                             <button class="btn btn-primary btn-result" onclick="getAlbumList(${item.artist.artist_id})">Click here for a list of albums</button>
+                                                            <button class="btn btn-primary btn-result-mobile" onclick="getAlbumList(${item.artist.artist_id})">Albums</button>
                                                         </div>
                                                     </div>`;
                     });
@@ -98,7 +103,7 @@ function getArtist() {
         );
 }
 
-
+//getLyrics is run when the user has selected the track they want lyrics for. 
 function getLyrics(trackID) {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -144,6 +149,7 @@ function getLyrics(trackID) {
     );
 }
 
+//getAlbumList is run when the user has selected an artist based on the results returned by getArtist
 function getAlbumList(artistID) {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -172,6 +178,7 @@ function getAlbumList(artistID) {
                                                     </div>
                                                     <div class="col-4 result-container">
                                                         <button class="btn btn-primary btn-result" onclick="getTrackList(${item.album.album_id})">Click here for a list of tracks</button>
+                                                        <button class="btn btn-primary btn-result-mobile" onclick="getTrackList(${item.album.album_id})">Tracks</button>
                                                     </div>
                                                 </div>`;
                 });
@@ -185,6 +192,7 @@ function getAlbumList(artistID) {
     );
 }
 
+//getTrackList is run when the user has selected an album based on the results returned by getAlbum
 function getTrackList(albumID) {
     var resultsSection = document.getElementById("results");
     resultsSection.innerHTML = "";
@@ -213,6 +221,7 @@ function getTrackList(albumID) {
                                                     </div>
                                                     <div class="col-4 result-container">
                                                         <button class="btn btn-primary btn-result" onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                        <button class="btn btn-primary btn-result-mobile" onclick="getLyrics(${item.track.track_id})">Lyrics</button>
                                                     </div>
                                                 </div>`
                 });

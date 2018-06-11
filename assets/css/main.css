@@ -29,6 +29,13 @@ input {
     margin: 5px auto 5px;
 }
 
+.btn-result-mobile {
+    background-color: #26547C;
+    border-color: #26547C;
+    margin: 5px auto 5px;
+    display: none;
+}
+
 .result-container {
     border: 1px solid #FFD166;
     text-align: center;
@@ -40,4 +47,13 @@ input {
 .lyric-container {
     border: 1px solid #FFD166;
     text-align: center;
+}
+
+@media (max-width: 767px) {
+    .btn-result {
+        display: none!important;
+    }
+    .btn-result-mobile {
+        display: block;
+    }
 }
