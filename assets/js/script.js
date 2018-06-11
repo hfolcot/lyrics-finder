@@ -16,7 +16,7 @@ function checkRadio() {
 //getTrack is run when the search is for a song.
 function getTrack() {
     var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = "";
+    resultsSection.innerHTML = ""; //clear the results div so that new results are not appended to the bottom of any current list
     $.ajax({
             type: "GET",
             data: {
@@ -125,6 +125,7 @@ function getLyrics(trackID) {
                 console.log(data);
                 try {
                     var lyricResults = data.message.body.lyrics.lyrics_body;
+                    var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
                 }
                 catch (err) {
                     resultsSection.innerHTML += `<div class="row justify-content-center">
@@ -137,7 +138,7 @@ function getLyrics(trackID) {
                 }
                 resultsSection.innerHTML += `<div class="row justify-content-center">
                                                 <div class="col-10 lyric-container">
-                                                ${lyricResults}
+                                                ${lyricResults}<br>${lyricCopyright}
                                                 </div>
                                              </div>`;
 
