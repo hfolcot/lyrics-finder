@@ -35,7 +35,8 @@ input {
     width: 125px;
 }
 
-.btn-srch:hover {
+.btn-srch:hover,
+.btn-result:hover {
     background-color: #2E86AB;
     transition: all 0.35s ease-in-out;
     -moz-transition: all 0.35s ease-in-out;
