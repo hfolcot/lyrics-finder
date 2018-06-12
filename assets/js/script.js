@@ -67,7 +67,6 @@ function getTrack() {
 //getArtist is run when the user has searched for an artist.
 function getArtist() {
     resetPage();
-    trackID =
         $.ajax({
                 type: "GET",
                 data: {
