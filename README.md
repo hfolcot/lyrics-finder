@@ -46,17 +46,17 @@ leads.
 
 There are seven main functions used in Lyric Finder:
 
-## checkRadio() [1]
+### checkRadio() [1]
 
 This function is invoked as soon as the user has clicked the Search button. It checks 
 which value of radio button is checked and runs the relevant function based on this.
 
-## resetPage() [2, 3, 4, 5, 6, 7]
+### resetPage() [2, 3, 4, 5, 6, 7]
 
 This function is invoked at the beginning of all the following functions in order 
 to clear any results that may already be in the results container.
 
-## getTrack() [1 > 2]
+### getTrack() [1 > 2]
 
 This function is invoked by checkRadio() if the Song radio button was checked when 
 the user searched. The function makes an $.ajax request to https://api.musixmatch.com/ws/1.1/track.search 
@@ -69,7 +69,7 @@ gives the user an option to view the lyrics of the selected song. This works by
 passing the track_id as a parameter into the getLyrics() function which is triggered 
 on click. 
 
-## getArtist() [1 > 4]
+### getArtist() [1 > 4]
 
 This function is invoked by checkRadio() if the Artist radio button was checked 
 when the user searched. The function makes an $.ajax request to https://api.musixmatch.com/ws/1.1/artist.search 
@@ -81,7 +81,7 @@ results container in index.html, along with a button which gives the user an opt
 to view the albums by the selected artist. This works by passing the artist_id as 
 a parameter into the getAlbumList() function which is triggered on click.
 
-## getLyrics() [2 > 3 AND 6 > 7]
+### getLyrics() [2 > 3 AND 6 > 7]
 
 This function is invoked when any button within a list of songs is clicked. The 
 track_id of the selected song is passed into the function to be used in the $.ajax
@@ -90,7 +90,7 @@ check that there are lyrics to return and if so, they are added to the html with
 the container element. If there are no lyrics to return, an error message is displayed 
 within the container element.
 
-## getAlbumList() [4 > 5]
+### getAlbumList() [4 > 5]
 
 This function runs similarly to the previous three functions. The artist_id is passed 
 into it from the getArtist() function and this is used to get the album data for 
@@ -99,13 +99,19 @@ name of each album and a button giving the option to view the track list for tha
 album. This will run getTrackList() on click and will pass the album_id as a parameter
 into that function.
 
-## getTrackList() [5 > 6]
+### getTrackList() [5 > 6]
 
 The album_id is passed into this function and used to make a request to https://api.musixmatch.com/ws/1.1/album.tracks.get
 for the list of tracks on that album. This will then return the list of tracks with 
 the option to view the lyrics, again with a button as in getTrack().
 
+## Design
 
+The layout of the page has been kept very basic to keep the methods obvious and 
+simple. A dark background image has been used which is gentle on the eye and doesn't
+draw the users attention. The colour scheme uses only three different colours outside 
+of this image. These are #26547C (a blue for the buttons), #2E86AB (the :hover colour 
+for the buttons) and #FFD166 which is used for all text on the page.
 
 ## Testing
 
@@ -113,6 +119,11 @@ The JavaScript code was run on JSHint and returned no errors.
 The HTML was run on the W3C Markup Validator and returned no errors.
 The CSS was run on the W3C CSS Validator and returned no errors.
 
+During user testing it was noted that not all songs in the MusixMatch database have
+lyrics and so a custom error has been added for those which do not have a lyrics_body key
+within the result.
+
+Each stage of testing was re-done after any new functionality changes.
 
 To be tested:
 
