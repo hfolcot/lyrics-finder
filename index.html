@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!--Load stylesheets-->
+    <!--Load stylesheets-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css" type="text/css" />
-        <!--Load scripts-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
+    <!--Load scripts-->
+
     <title>Lyrics Finder</title>
 </head>
 
@@ -30,12 +29,15 @@
                     <input type="radio" name="search" value="artist" id="artistRadioButton" checked>Artist
                     <input type="radio" name="search" value="song" id="songRadioButton">Song<br>
                     <button class="btn btn-primary btn-srch" onclick="checkRadio()">Search</button>
+                    <button class="btn btn-primary btn-srch" onclick="resetPage()">Clear Results</button>
                 </form>
             </div>
         </div>
         <div id="results">
         </div>
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 var searchTerms; //The value entered into the search box.
 var trackID; //The ID created in the getTrack function for use in the getLyrics function. 
+var resultsSection = document.getElementById("results");
 
 //checkRadio is run when the user clicks on the Search button
 function checkRadio() {
@@ -13,10 +14,14 @@ function checkRadio() {
     }
 }
 
+//To reset the page when results are displayed.
+function resetPage() {
+    resultsSection.innerHTML = "";
+}
+
 //getTrack is run when the search is for a song.
 function getTrack() {
-    var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = ""; //clear the results div so that new results are not appended to the bottom of any current list
+    resetPage();
     $.ajax({
             type: "GET",
             data: {
@@ -61,8 +66,7 @@ function getTrack() {
 
 //getArtist is run when the user has searched for an artist.
 function getArtist() {
-    var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = "";
+    resetPage();
     trackID =
         $.ajax({
                 type: "GET",
@@ -105,8 +109,7 @@ function getArtist() {
 
 //getLyrics is run when the user has selected the track they want lyrics for. 
 function getLyrics(trackID) {
-    var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = "";
+    resetPage();
     $.ajax({
             type: "GET",
             data: {
@@ -152,8 +155,7 @@ function getLyrics(trackID) {
 
 //getAlbumList is run when the user has selected an artist based on the results returned by getArtist
 function getAlbumList(artistID) {
-    var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = "";
+    resetPage();
     $.ajax({
             type: "GET",
             data: {
@@ -195,8 +197,7 @@ function getAlbumList(artistID) {
 
 //getTrackList is run when the user has selected an album based on the results returned by getAlbum
 function getTrackList(albumID) {
-    var resultsSection = document.getElementById("results");
-    resultsSection.innerHTML = "";
+    resetPage();
     $.ajax({
             type: "GET",
             data: {
@@ -224,7 +225,7 @@ function getTrackList(albumID) {
                                                         <button class="btn btn-primary btn-result" onclick="getLyrics(${item.track.track_id})">Click here for lyrics</button>
                                                         <button class="btn btn-primary btn-result-mobile" onclick="getLyrics(${item.track.track_id})">Lyrics</button>
                                                     </div>
-                                                </div>`
+                                                </div>`;
                 });
 
 
