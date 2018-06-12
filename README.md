@@ -123,6 +123,12 @@ During user testing it was noted that not all songs in the MusixMatch database h
 lyrics and so a custom error has been added for those which do not have a lyrics_body key
 within the result.
 
+assets/js/spec.js was created and run in order to check the functionality of resetPage();
+this test was successful.
+In order to ensure the test script was correct the function was edited to include 
+text within the results container, at which point the test failed.
+
+
 Each stage of testing was re-done after any new functionality changes.
 
 To be tested:
