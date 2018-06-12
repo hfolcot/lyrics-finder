@@ -5,8 +5,11 @@ Brief - To create a single page application that relies heavily on one or more A
 The API that I have chosen to use is the MusixMatch catalog of song lyrics, located 
 at https://www.musixmatch.com/
 
-Lyrics Finder is a search engine that allows the user to search by artist or song 
-and then select the lyrics they wish to view based on the results.
+Users who wish to look up the lyrics of a specific song can do so by using Lyric 
+Finder.
+
+The user can search by artist or by song and is returned a list of results which 
+they can then navigate through to find the lyrics of the song they are looking for.
 
 The page is now live at https://hfolcot.github.io/lyrics-finder/
 
@@ -41,7 +44,7 @@ leads.
 6. Main > Artist Results > Album Results > Song Results
 7. Main > Artist Results > Album Results > Song Results > Lyric Results
 
-There are seven different functions used in Lyric Finder:
+There are seven main functions used in Lyric Finder:
 
 ## checkRadio() [1]
 
@@ -162,3 +165,9 @@ Screen width/Page display|Galaxy S5|Pixel 2|Pixel 2XL|iPhone 5/SE|iPhone 6/7/8|i
 5|X|X|X|X|X|X|X|X|X|
 6|X|X|X|X|X|X|X|X|X|
 7|X|X|X|X|X|X|X|X|X|
+
+
+## Deployment
+
+This project was built in Cloud9 and pushed to GitHub where it was then published 
+on GitHub pages at https://hfolcot.github.io/lyrics-finder/
