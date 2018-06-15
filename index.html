@@ -9,31 +9,46 @@
     <!--Load stylesheets-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css" type="text/css" />
-  
+
     <title>Lyrics Finder</title>
 </head>
 
 <body>
     <header>
-        <div class="row justify-content-center">
-            <div class="col-6 page-title">
-                <h1>Lyrics Finder</h1>
+        <div class="row navbar bg-dark">
+            <div class="col">
+                <h1 class="page-title">Lyrics Finder</h1>
+
             </div>
         </div>
     </header>
     <section>
+
         <div class="row justify-content-center">
-            <div class="col-10 search-box">
+            <div class="col-xs-8 col-md-6 musixmatch-logo">
+                <p>Lyrics Finder is powered by <a href="http://www.musixmatch.com" target="_blank"><img src="/assets/images/musixmatch.png" alt="Musixmatch Logo"> MusixMatch</a></p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xs-8 col-md-4 search-box">
                 <form onsubmit="return false">
-                    <input type="search" name="q" id="search" placeholder="Enter search terms here"><br>
-                    <input type="radio" name="search" value="artist" id="artistRadioButton" checked>Artist
-                    <input type="radio" name="search" value="song" id="songRadioButton">Song<br>
-                    <button class="btn btn-primary btn-srch" onclick="checkRadio()">Search</button>
-                    <button class="btn btn-primary btn-srch" onclick="resetPage()">Clear Results</button>
+                    <div class="form-group">
+                        <input type="search" name="q" id="search" placeholder="Enter search terms here">
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="search" value="artist" id="artistRadioButton" checked>Artist
+                        <input type="radio" name="search" value="song" id="songRadioButton">Song
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary btn-srch" onclick="checkRadio()">Search</button>
+                        <button class="btn btn-secondary btn-clear" onclick="resetPage()">Clear Results</button>
+                    </div>
                 </form>
             </div>
         </div>
-        <div id="results">
+        <div class="row justify-content-center">
+            <table id="results" class="table table-hover table-striped">
+            </table>
         </div>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
