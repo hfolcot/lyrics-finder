@@ -1,6 +1,8 @@
 var searchTerms; //The value entered into the search box.
-var trackID; //The ID created in the getTrack function for use in the getLyrics function. 
-var resultsSection = document.getElementById("results");
+var trackID; //The ID created in the getTrack function for use in the returnLyrics function. 
+var resultsSection = document.getElementById("results"); //the html div used to display the results of each ajax call
+
+
 
 //checkRadio is run when the user clicks on the Search button
 function checkRadio() {
@@ -19,18 +21,18 @@ function resetPage() {
     resultsSection.innerHTML = "";
 }
 
-//getTrack is run when the search is for a song.
+//If 'song' radio button is selected:
 function getTrack() {
     resetPage();
     $.ajax({
             type: "GET",
             data: {
                 apikey: "16099f064260947071709a4bc6421891",
-                q_track: searchTerms,
+                q_track: searchTerms, //queries by song name
                 format: "jsonp",
                 callback: "jsonp_callback",
-                page_size: 100,
-                s_artist_rating: "DESC",
+                page_size: 100, //returns the first 100 results
+                s_artist_rating: "DESC", //sorts by popularity of artist
 
             },
 
@@ -55,8 +57,8 @@ function getTrack() {
                                                         <td>${item.track.track_name}</td>
                                                         <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn btn-secondary btn-result" onclick="getLyrics(${item.track.track_id}, '${item.track.track_name}')">Click here for lyrics</button>
-                                                            <button class="btn btn-secondary btn-result-mobile" onclick="getLyrics(${item.track.track_id}, ${item.track.track_name})">Lyrics</button>
+                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id})">Lyrics</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -71,18 +73,18 @@ function getTrack() {
     );
 }
 
-//getArtist is run when the user has searched for an artist.
+//If 'artist' radio button is selected:
 function getArtist() {
     resetPage();
     $.ajax({
             type: "GET",
             data: {
                 apikey: "16099f064260947071709a4bc6421891",
-                q_artist: searchTerms,
+                q_artist: searchTerms, //queries by artist name
                 format: "jsonp",
                 callback: "jsonp_callback",
-                page_size: 50,
-                s_artist_rating: "DESC",
+                page_size: 50, //returns the top 50 results
+                s_artist_rating: "DESC", //sorted by popularity of artist
 
             },
 
@@ -113,7 +115,7 @@ function getArtist() {
 
                 });
                 if (artistResults.length === 0) {
-                    resetPage();
+                    resetPage(); //necessary to clear the table header already printed above.
                     resultsSection.innerHTML += `<thead>
                                                     <tr>
                                                         <th scope="col">A problem has occurred</th>
@@ -133,71 +135,19 @@ function getArtist() {
     );
 }
 
-//getLyrics is run when the user has selected the track they want lyrics for. 
-function getLyrics(trackID, trackName) {
-    resetPage();
-    $.ajax({
-            type: "GET",
-            data: {
-                apikey: "16099f064260947071709a4bc6421891", 
-                track_id: trackID,
-                format: "jsonp",
-                callback: "jsonp_callback",
 
-            },
-            url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
-            dataType: "jsonp",
-            jsonpCallback: 'jsonp_callback',
-            contentType: 'application/json',
-            success: function(data) {
-                console.log(data);
-                try {
-                    var lyricResults = data.message.body.lyrics.lyrics_body;
-                    var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
-                }
-                catch (err) {
-                    resultsSection.innerHTML += `<thead>
-                                                <tr>
-                                                  <th scope="col">A problem has occurred</th>
-                                                </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                    <td>Sorry, there are no lyrics available for this song.</td>
-                                                </tr>
-                                             </tbody>`;
-                    return;
-
-                }
-                resultsSection.innerHTML += `<thead>
-                                                <tr>
-                                                  <th scope="col">${trackName}</th>
-                                                </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                    <td>${lyricResults}<br>${lyricCopyright}</td>
-                                                </tr>
-                                             </tbody>`;
-
-            }
-        }
-
-    );
-}
-
-//getAlbumList is run when the user has selected an artist based on the results returned by getArtist
+//If user opts to view an artist's albums via the getArtist function:
 function getAlbumList(artistID) {
     resetPage();
     $.ajax({
             type: "GET",
             data: {
                 apikey: "16099f064260947071709a4bc6421891",
-                artist_id: artistID,
+                artist_id: artistID, //unique ID of the specified artist
                 format: "jsonp",
                 callback: "jsonp_callback",
-                page_size: 100,
-                g_album_name: 1
+                page_size: 100, //returns the top 100 results
+                g_album_name: 1 //groups albums of the same name into one result
 
             },
             url: "https://api.musixmatch.com/ws/1.1/artist.albums.get",
@@ -236,17 +186,17 @@ function getAlbumList(artistID) {
     );
 }
 
-//getTrackList is run when the user has selected an album based on the results returned by getAlbum
+//If user opts to view an album's tracks via the getAlbumList function:
 function getTrackList(albumID) {
     resetPage();
     $.ajax({
             type: "GET",
             data: {
                 apikey: "16099f064260947071709a4bc6421891",
-                album_id: albumID,
+                album_id: albumID, //unique ID of the specified album
                 format: "jsonp",
                 callback: "jsonp_callback",
-                page_size: 50,
+                page_size: 50, //returns the top 50 results
 
             },
             url: "https://api.musixmatch.com/ws/1.1/album.tracks.get",
@@ -268,8 +218,8 @@ function getTrackList(albumID) {
                                                     <tr>
                                                         <td>${item.track.track_name}</td>
                                                         <td>
-                                                            <button class="btn btn-secondary btn-result" onclick="getLyrics(${item.track.track_id}, '${item.track.track_name}')">Click here for lyrics</button>
-                                                            <button class="btn btn-secondary btn-result-mobile" onclick="getLyrics(${item.track.track_id}, '${item.track.track_name}')">Lyrics</button>
+                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id})">Click here for lyrics</button>
+                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id})">Lyrics</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -281,3 +231,75 @@ function getTrackList(albumID) {
 
     );
 }
+
+//when a song has been selected from the results in getTrackList or get Track:
+function returnLyrics(trackID) {
+    resetPage();
+    var trackName;
+    $.ajax({
+            type: "GET",
+            data: {
+                apikey: "16099f064260947071709a4bc6421891",
+                track_id: trackID, //unique ID of the song
+                format: "jsonp",
+                callback: "jsonp_callback",
+
+            },
+            url: "https://api.musixmatch.com/ws/1.1/track.get",
+            dataType: "jsonp",
+            jsonpCallback: 'jsonp_callback',
+            contentType: 'application/json',
+            success: function(data) {
+                trackName = data.message.body.track.track_name; //creates a variable holding the name of the selected song for use in the table heading
+            },
+            complete: function() {
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        apikey: "16099f064260947071709a4bc6421891",
+                        track_id: trackID, //unique ID of the song
+                        format: "jsonp",
+                        callback: "jsonp_callback",
+
+                    },
+                    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
+                    dataType: "jsonp",
+                    jsonpCallback: 'jsonp_callback',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        console.log(data);
+                        try { //checks to make sure there are lyrics to return
+                            var lyricResults = data.message.body.lyrics.lyrics_body;
+                            var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
+                        }
+                        catch (err) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
+                            resultsSection.innerHTML += `<thead>
+                                                <tr>
+                                                  <th scope="col">A problem has occurred</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <tr>
+                                                    <td>Sorry, there are no lyrics available for this song.</td>
+                                                </tr>
+                                             </tbody>`;
+                            return;
+
+                        }
+                        //lyrics are printed into the results div.
+                        resultsSection.innerHTML += `<thead> 
+                                                <tr>
+                                                  <th scope="col">${trackName}</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <tr>
+                                                    <td>${lyricResults}<br>${lyricCopyright}</td>
+                                                </tr>
+                                             </tbody>`;
+                    }
+                });
+            }
+        });
+    }
+
