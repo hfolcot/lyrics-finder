@@ -1,3 +1,5 @@
+/*********************************************************************Main*/
+
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 @import url('https://fonts.googleapis.com/css?family=Corben');
 
@@ -9,6 +11,8 @@ body {
     background-attachment: fixed;
 }
 
+
+/*Nav bar*/
 .page-title {
     font-family: 'Corben', sans-serif;
     letter-spacing: 3px;
@@ -20,6 +24,7 @@ body {
     opacity: 0.75;
 }
 
+/*****************************************************************Search box*/ 
 
 .search-box {
     padding: 20px;
@@ -45,13 +50,15 @@ body {
 }
 
 #search:focus {
-    outline: none;
+    outline: none; /*needed to be removed as the outline had square corners which interferes with border radius*/
 
 }
 
 input {
     margin: 10px;
 }
+
+/*********************************************************************Buttons*/
 
 .btn-result,
 .btn-srch {
@@ -80,6 +87,17 @@ input {
     -o-transition: all 0.35s ease-in-out;
 }
 
+
+.btn-result-mobile {
+    background-color: #978897;
+    border-color: #978897;
+    margin: 5px auto 5px;
+    display: none;
+}
+
+
+/*********************************************************************Results*/
+
 #results {
     margin-top: 25px;
     max-width: 50vw;
@@ -92,25 +110,20 @@ td {
     text-align: center;
 }
 
-.btn-result-mobile {
-    background-color: #978897;
-    border-color: #978897;
-    margin: 5px auto 5px;
-    display: none;
-}
-
 
 .lyric-container {
     border: 1px solid #978897;
     text-align: center;
 }
 
+/*************************************************************Media Queries*/
+
 @media (max-width: 767px) {
     .page-title {
        text-align: center; 
     }
     .btn-result {
-        display: none!important;
+        display: none;
     }
     .btn-result-mobile {
         display: block;
