@@ -8,8 +8,8 @@ at https://www.musixmatch.com/
 Users who wish to look up the lyrics of a specific song can do so by using Lyric 
 Finder.
 
-The user can search by artist or by song and is returned a list of results which 
-they can then navigate through to find the lyrics of the song they are looking for.
+The user can search by artist or by song and is returned a list of results through which 
+they can navigate to find the lyrics of the song they are looking for.
 
 The page is now live at https://hfolcot.github.io/lyrics-finder/
 
@@ -19,11 +19,11 @@ The page is now live at https://hfolcot.github.io/lyrics-finder/
 
 ### General
 
-The page links to Bootstrap 4.0.0 and makes use of its grid system and other styling.
+The page uses Bootstrap 4.0.0 and makes use of its grid system and other styling.
 
-The page uses the Nunito Sans font from Google Fonts.
+The page uses the Nunito Sans and Corben fonts from Google Fonts.
 
-My own further styling has been done within assets/css/styles.css
+My own further styling has been done within assets/css/main.css
 
 The scripting makes use of JQuery 3.3.1.
 
@@ -81,14 +81,15 @@ results container in index.html, along with a button which gives the user an opt
 to view the albums by the selected artist. This works by passing the artist_id as 
 a parameter into the getAlbumList() function which is triggered on click.
 
-### getLyrics() [2 > 3 AND 6 > 7]
+### returnLyrics() [2 > 3 AND 6 > 7]
 
 This function is invoked when any button within a list of songs is clicked. The 
-track_id of the selected song is passed into the function to be used in the $.ajax
-request to https://api.musixmatch.com/ws/1.1/matcher.lyrics.get. The function will 
-check that there are lyrics to return and if so, they are added to the html within 
-the container element. If there are no lyrics to return, an error message is displayed 
-within the container element.
+track ID of the selected song is passed through from the previous function. The 
+function uses two separate ajax calls. The first is used to get data from the track.get 
+in the API and plucks the track name from this so that it can be displayed as a title.
+A second call is then made to matcher.lyrics.get to return the lyrics themselves. 
+If there are no lyrics to return, a custom error message is displayed within the container element.
+
 
 ### getAlbumList() [4 > 5]
 
@@ -109,9 +110,8 @@ the option to view the lyrics, again with a button as in getTrack().
 
 The layout of the page has been kept very basic to keep the methods obvious and 
 simple. A dark background image has been used which is gentle on the eye and doesn't
-draw the users attention. The colour scheme uses only three different colours outside 
-of this image. These are #26547C (a blue for the buttons), #2E86AB (the :hover colour 
-for the buttons) and #FFD166 which is used for all text on the page.
+draw the user's attention. The colour scheme tries to match this image as much as 
+possible and was created with Coolors.co.
 
 ## Testing
 
@@ -128,6 +128,15 @@ this test was successful.
 In order to ensure the test script was correct the function was edited to include 
 text within the results container, at which point the test failed.
 
+Whilst testing, there was an interesting issue encountered where no lyrics were 
+being returned for any song containing double or single quote marks. On investigation 
+it appeared that the issue was caused by the function trying to pass a song name 
+into a new function (getLyrics), but when quotes were present in the song name, it was reading 
+this as the end of the parameter and erroring because there was no closing parenthesis.
+This was resolved by editing getLyrics (renamed during this process to returnLyrics 
+so that it retrieved the song name itself in a separate call rather than passing 
+it through from the previous function.
+
 
 Each stage of testing was re-done after any new functionality changes.
 
@@ -135,11 +144,17 @@ To be tested:
 
 1. Main
 2. Main > Song Results
-3. Main > Song Results > Lyric Results
-4. Main > Artist Results
-5. Main > Artist Results > Album Results
-6. Main > Artist Results > Album Results > Song Results
-7. Main > Artist Results > Album Results > Song Results > Lyric Results
+3. Main > Song Results > Clear Results
+4. Main > Song Results > Lyric Results
+5. Main > Song Results > Lyric Results > Clear Results
+6. Main > Artist Results
+7. Main > Artist Results > Clear Results
+8. Main > Artist Results > Album Results
+9. Main > Artist Results > Album Results > Clear Results
+10. Main > Artist Results > Album Results > Song Results
+11. Main > Artist Results > Album Results > Song Results > Clear Results
+12. Main > Artist Results > Album Results > Song Results > Lyric Results
+13. Main > Artist Results > Album Results > Song Results > Lyric Results > Clear Results
 
 (X = Functioning as expected)
 (O = Not functioning as expected)
@@ -155,6 +170,12 @@ Browser/Test | Opera | Firefox | Chrome | Edge | Safari
 5|X|X|X|X|X|
 6|X|X|X|X|X|
 7|X|X|X|X|X|
+8|X|X|X|X|X|
+9|X|X|X|X|X|
+10|X|X|X|X|X|
+11|X|X|X|X|X|
+12|X|X|X|X|X|
+13|X|X|X|X|X|
 
 The following is testing whether the display is working as expected.
 
@@ -167,11 +188,24 @@ Browser/Test | Opera | Firefox | Chrome | Edge | Safari
 5|X|X|X|X|X|
 6|X|X|X|X|X|
 7|X|X|X|X|X|
+8|X|X|X|X|X|
+9|X|X|X|X|X|
+10|X|X|X|X|X|
+11|X|X|X|X|X|
+12|X|X|X|X|X|
+13|X|X|X|X|X|
+
+An issue was noted on Microsoft Edge where the background image wasn't displaying 
+correctly. This was due to the position of the script element within the HTML code.
+Once it was moved to the end of the body rather than in the head the background 
+image displayed correctly.
 
 
 #### Responsiveness
 
-Using Google Chrome developer tools to test each stage of the application at different screen width.
+Using Google Chrome developer tools to test how each stage of the application displays at different screen width.
+
+X = Displaying as expected
 
 Screen width/Page display|Galaxy S5|Pixel 2|Pixel 2XL|iPhone 5/SE|iPhone 6/7/8|iPhone 6/7/8 Plus|iPhone X|iPad|iPad Pro
 -----|-----|-----|-----|-----|-----|-----|-----|-----|-----
@@ -182,6 +216,12 @@ Screen width/Page display|Galaxy S5|Pixel 2|Pixel 2XL|iPhone 5/SE|iPhone 6/7/8|i
 5|X|X|X|X|X|X|X|X|X|
 6|X|X|X|X|X|X|X|X|X|
 7|X|X|X|X|X|X|X|X|X|
+8|X|X|X|X|X|X|X|X|X|
+9|X|X|X|X|X|X|X|X|X|
+10|X|X|X|X|X|X|X|X|X|
+11|X|X|X|X|X|X|X|X|X|
+12|X|X|X|X|X|X|X|X|X|
+13|X|X|X|X|X|X|X|X|X|
 
 
 ## Deployment
