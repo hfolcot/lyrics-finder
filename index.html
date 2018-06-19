@@ -8,8 +8,16 @@
 
     <!--Load stylesheets-->
     <link rel="stylesheet" href="assets/css/bootstrap4_0_0.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/main.css" type="text/css" />
-
+    
+    <!--Uncomment to use Jasmine testing
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.1.0/jasmine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.1.0/jasmine-html.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.1.0/boot.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.1.0/jasmine.css" />
+    <script type="text/javascript" src="assets/js/spec.js"></script>-->
+    
     <title>Lyrics Finder</title>
 </head>
 
@@ -47,7 +55,10 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <table id="results" class="table table-hover table-striped">
+            <table id="back-button-container" class="table table-hover table-striped results"></table>
+        </div>
+        <div class="row justify-content-center">
+            <table id="results" class="table table-hover table-striped results">
             </table>
         </div>
     </section>

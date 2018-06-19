@@ -13,6 +13,7 @@ body {
 
 
 /*Nav bar*/
+
 .page-title {
     font-family: 'Corben', sans-serif;
     letter-spacing: 3px;
@@ -24,7 +25,7 @@ body {
     opacity: 0.75;
 }
 
-/*****************************************************************Search box*/ 
+/*****************************************************************Search box*/
 
 .search-box {
     padding: 20px;
@@ -50,8 +51,8 @@ body {
 }
 
 #search:focus {
-    outline: none; /*needed to be removed as the outline had square corners which interferes with border radius*/
-
+    outline: none;
+    /*needed to be removed as the outline had square corners which interferes with border radius*/
 }
 
 input {
@@ -95,10 +96,9 @@ input {
     display: none;
 }
 
-
 /*********************************************************************Results*/
 
-#results {
+.results {
     margin-top: 25px;
     max-width: 50vw;
 
@@ -120,7 +120,7 @@ td {
 
 @media (max-width: 767px) {
     .page-title {
-       text-align: center; 
+        text-align: center;
     }
     .btn-result {
         display: none;
@@ -128,7 +128,7 @@ td {
     .btn-result-mobile {
         display: block;
     }
-    #results {
+    .results {
         max-width: 80vw;
     }
 }

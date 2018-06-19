@@ -1,7 +1,8 @@
 var searchTerms; //The value entered into the search box.
 var trackID; //The ID created in the getTrack function for use in the returnLyrics function. 
+var artistIDarray = []; //created for the back button on the getTrackList results.
 var resultsSection = document.getElementById("results"); //the html div used to display the results of each ajax call
-
+var backButton = document.getElementById("back-button-container"); //container for button for the user to navigate between results pages
 
 
 //checkRadio is run when the user clicks on the Search button
@@ -19,6 +20,7 @@ function checkRadio() {
 //To reset the page when results are displayed.
 function resetPage() {
     resultsSection.innerHTML = "";
+    backButton.innerHTML = "";
 }
 
 //If 'song' radio button is selected:
@@ -75,6 +77,7 @@ function getTrack() {
 
 //If 'artist' radio button is selected:
 function getArtist() {
+    artistIDarray.length=0;
     resetPage();
     $.ajax({
             type: "GET",
@@ -139,6 +142,7 @@ function getArtist() {
 //If user opts to view an artist's albums via the getArtist function:
 function getAlbumList(artistID) {
     resetPage();
+    artistIDarray.length=0;
     $.ajax({
             type: "GET",
             data: {
@@ -158,12 +162,13 @@ function getAlbumList(artistID) {
                 console.log(data);
                 var albumList = data.message.body.album_list;
                 console.dir(albumList);
+                backButton.innerHTML += `<button class="btn btn-secondary btn-srch" onclick="getArtist()"><i class="fas fa-chevron-left"></i> Go Back</button>`;
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">Album Name</th>
                                                   <th scope="col">Track List</th>
                                                 </tr>
-                                             </thead>`;
+                                            </thead>`;
                 albumList.forEach(function(item) {
                     resultsSection.innerHTML += `<tbody>
                                                     <tr>
@@ -206,7 +211,11 @@ function getTrackList(albumID) {
             success: function(data) {
                 console.log(data);
                 var trackResults = data.message.body.track_list;
+                trackResults.forEach(function(item) {
+                    artistIDarray.push(item.track.artist_id); //picks out the artist ID for if the user clicks the back to Albums button.
+                });
                 console.dir(trackResults);
+                backButton.innerHTML += `<button class="btn btn-secondary btn-srch" onclick="getAlbumList(artistIDarray[0])"><i class="fas fa-chevron-left"></i> Go Back</button>`;
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">Track Name</th>
@@ -268,6 +277,7 @@ function returnLyrics(trackID) {
                     contentType: 'application/json',
                     success: function(data) {
                         console.log(data);
+                        backButton.innerHTML += `<button class="btn btn-secondary btn-srch" onclick="checkRadio()"><i class="fas fa-chevron-left"></i> Go Back</button>`;
                         try { //checks to make sure there are lyrics to return
                             var lyricResults = data.message.body.lyrics.lyrics_body;
                             var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
