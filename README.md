@@ -133,7 +133,7 @@ being returned for any song containing double or single quote marks. On investig
 it appeared that the issue was caused by the function trying to pass a song name 
 into a new function (getLyrics), but when quotes were present in the song name, it was reading 
 this as the end of the parameter and erroring because there was no closing parenthesis.
-This was resolved by editing getLyrics (renamed during this process to returnLyrics 
+This was resolved by editing getLyrics (renamed during this process to returnLyrics) 
 so that it retrieved the song name itself in a separate call rather than passing 
 it through from the previous function.
 
@@ -146,15 +146,19 @@ To be tested:
 2. Main > Song Results
 3. Main > Song Results > Clear Results
 4. Main > Song Results > Lyric Results
-5. Main > Song Results > Lyric Results > Clear Results
-6. Main > Artist Results
-7. Main > Artist Results > Clear Results
-8. Main > Artist Results > Album Results
-9. Main > Artist Results > Album Results > Clear Results
-10. Main > Artist Results > Album Results > Song Results
-11. Main > Artist Results > Album Results > Song Results > Clear Results
-12. Main > Artist Results > Album Results > Song Results > Lyric Results
-13. Main > Artist Results > Album Results > Song Results > Lyric Results > Clear Results
+5. Main > Song Results > Lyric Results > Go Back
+6. Main > Song Results > Lyric Results > Clear Results
+7. Main > Artist Results
+8. Main > Artist Results > Clear Results
+9. Main > Artist Results > Album Results
+10. Main > Artist Results > Album Results > Go Back
+11. Main > Artist Results > Album Results > Clear Results
+12. Main > Artist Results > Album Results > Song Results
+13. Main > Artist Results > Album Results > Song Results > Go Back
+14. Main > Artist Results > Album Results > Song Results > Clear Results
+15. Main > Artist Results > Album Results > Song Results > Lyric Results
+16. Main > Artist Results > Album Results > Song Results > Lyric Results > Go Back
+17. Main > Artist Results > Album Results > Song Results > Lyric Results > Clear Results
 
 (X = Functioning as expected)
 (O = Not functioning as expected)
@@ -176,6 +180,10 @@ Browser/Test | Opera | Firefox | Chrome | Edge | Safari
 11|X|X|X|X|X|
 12|X|X|X|X|X|
 13|X|X|X|X|X|
+14|X|X|X|X|X|
+15|X|X|X|X|X|
+16|X|X|X|X|X|
+17|X|X|X|X|X|
 
 The following is testing whether the display is working as expected.
 
@@ -185,15 +193,15 @@ Browser/Test | Opera | Firefox | Chrome | Edge | Safari
 2|X|X|X|X|X|
 3|X|X|X|X|X|
 4|X|X|X|X|X|
-5|X|X|X|X|X|
 6|X|X|X|X|X|
 7|X|X|X|X|X|
 8|X|X|X|X|X|
 9|X|X|X|X|X|
-10|X|X|X|X|X|
 11|X|X|X|X|X|
 12|X|X|X|X|X|
-13|X|X|X|X|X|
+14|X|X|X|X|X|
+15|X|X|X|X|X|
+17|X|X|X|X|X|
 
 An issue was noted on Microsoft Edge where the background image wasn't displaying 
 correctly. This was due to the position of the script element within the HTML code.
@@ -213,15 +221,15 @@ Screen width/Page display|Galaxy S5|Pixel 2|Pixel 2XL|iPhone 5/SE|iPhone 6/7/8|i
 2|X|X|X|X|X|X|X|X|X|
 3|X|X|X|X|X|X|X|X|X|
 4|X|X|X|X|X|X|X|X|X|
-5|X|X|X|X|X|X|X|X|X|
 6|X|X|X|X|X|X|X|X|X|
 7|X|X|X|X|X|X|X|X|X|
 8|X|X|X|X|X|X|X|X|X|
 9|X|X|X|X|X|X|X|X|X|
-10|X|X|X|X|X|X|X|X|X|
 11|X|X|X|X|X|X|X|X|X|
 12|X|X|X|X|X|X|X|X|X|
-13|X|X|X|X|X|X|X|X|X|
+14|X|X|X|X|X|X|X|X|X|
+15|X|X|X|X|X|X|X|X|X|
+17|X|X|X|X|X|X|X|X|X|
 
 
 ## Deployment
