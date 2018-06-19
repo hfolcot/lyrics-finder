@@ -27,6 +27,8 @@ body {
 
 .max-vw {
     max-width: 100vw;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 /*****************************************************************Search box*/
