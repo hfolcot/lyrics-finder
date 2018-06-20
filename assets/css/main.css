@@ -125,6 +125,9 @@ td {
 /*************************************************************Media Queries*/
 
 @media (max-width: 767px) {
+    body {
+        background-repeat: repeat-y; /*added to resolve an issue with iOS where the background image will not stay fixed */ 
+    }
     .page-title {
         text-align: center;
     }
@@ -137,4 +140,5 @@ td {
     .results {
         max-width: 80vw;
     }
+
 }
