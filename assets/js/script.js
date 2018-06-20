@@ -322,6 +322,7 @@ function returnLyrics(trackID, goBack) {
                     try { //checks to make sure there are lyrics to return
                         var lyricResults = data.message.body.lyrics.lyrics_body;
                         var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
+                        console.log(typeof lyricResults);
                     }
                     catch (err) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
                         resultsSection.innerHTML += `<thead>
@@ -338,6 +339,7 @@ function returnLyrics(trackID, goBack) {
 
                     }
                     //lyrics are printed into the results div.
+                    
                     resultsSection.innerHTML += `<thead> 
                                                 <tr>
                                                   <th scope="col">${trackName}</th>
@@ -345,7 +347,7 @@ function returnLyrics(trackID, goBack) {
                                              </thead>
                                              <tbody>
                                                 <tr>
-                                                    <td>${lyricResults}<br>${lyricCopyright}</td>
+                                                    <td class="lyrics">${lyricResults}<br>${lyricCopyright}</td>
                                                 </tr>
                                              </tbody>`;
                 }
