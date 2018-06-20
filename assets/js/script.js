@@ -42,9 +42,7 @@ function getTrack() {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
                 var trackResults = data.message.body.track_list;
-                console.dir(trackResults);
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">Track Name</th>
@@ -107,9 +105,7 @@ function getArtist() {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
                 var artistResults = data.message.body.artist_list;
-                console.dir(artistResults);
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">Artist Name</th>
@@ -152,7 +148,7 @@ function getArtist() {
 
 //If user opts to view an artist's albums via the getArtist function:
 function getAlbumList(artistID) {
-    window['currentArtist'] = artistID; //makes the artistID available to use with the Go Back button on the track list results (from getTrackList)
+    window['currentArtist'] = artistID; //makes the artistID available to use with the Go Back button on the track list results (from getTrackList)(assistance from mentor CZ on this line)
     resetPage();
     $.ajax({
             type: "GET",
@@ -170,9 +166,7 @@ function getAlbumList(artistID) {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
                 var albumList = data.message.body.album_list;
-                console.dir(albumList);
                 backButton.innerHTML += `<button class="btn btn-secondary btn-srch" onclick="getArtist()"><i class="fas fa-chevron-left"></i> Go Back</button>`;
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
@@ -234,9 +228,7 @@ function getTrackList(albumID) {
             jsonpCallback: 'jsonp_callback',
             contentType: 'application/json',
             success: function(data) {
-                console.log(data);
                 var trackResults = data.message.body.track_list;
-                console.dir(trackResults);
                 backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
                 resultsSection.innerHTML += `<thead>
                                                 <tr>
@@ -317,8 +309,6 @@ function returnLyrics(trackID, goBack) {
                 jsonpCallback: 'jsonp_callback',
                 contentType: 'application/json',
                 success: function(data) {
-                    console.log(data);
-
                     try { //checks to make sure there are lyrics to return
                         var lyricResults = data.message.body.lyrics.lyrics_body;
                         var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
