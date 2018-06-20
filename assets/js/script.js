@@ -58,8 +58,8 @@ function getTrack() {
                                                         <td>${item.track.track_name}</td>
                                                         <td>${item.track.artist_name}</td>
                                                         <td>
-                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id})">Click here for lyrics</button>
-                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id})">Lyrics</button>
+                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id}, 'getTrack')">Click here for lyrics</button>
+                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id}, 'getTrack')">Lyrics</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -223,8 +223,8 @@ function getTrackList(albumID) {
                                                     <tr>
                                                         <td>${item.track.track_name}</td>
                                                         <td>
-                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id})">Click here for lyrics</button>
-                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id})">Lyrics</button>
+                                                            <button class="btn btn-secondary btn-result" onclick="returnLyrics(${item.track.track_id}, 'getTrackList')">Click here for lyrics</button>
+                                                            <button class="btn btn-secondary btn-result-mobile" onclick="returnLyrics(${item.track.track_id}, 'getTrackList')">Lyrics</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>`;
@@ -238,9 +238,14 @@ function getTrackList(albumID) {
 }
 
 //when a song has been selected from the results in getTrackList or getTrack:
-function returnLyrics(trackID) {
+function returnLyrics(trackID, goBack) {
     resetPage();
     var trackName;
+    if (goBack == 'getTrack') {
+        backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
+    } else if (goBack == 'getTrackList') {
+        backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
+    }
     $.ajax({
             type: "GET",
             data: {
@@ -273,7 +278,7 @@ function returnLyrics(trackID) {
                     contentType: 'application/json',
                     success: function(data) {
                         console.log(data);
-                        backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
+                        
                         try { //checks to make sure there are lyrics to return
                             var lyricResults = data.message.body.lyrics.lyrics_body;
                             var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
