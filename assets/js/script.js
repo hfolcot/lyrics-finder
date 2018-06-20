@@ -283,7 +283,7 @@ function returnLyrics(trackID, goBack) {
     if (goBack == 'getTrack') {
         backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
     }
-    else if (goBack == 'getTrackList') {
+    else {
         backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
     }
     $.ajax({
@@ -322,7 +322,6 @@ function returnLyrics(trackID, goBack) {
                     try { //checks to make sure there are lyrics to return
                         var lyricResults = data.message.body.lyrics.lyrics_body;
                         var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
-                        console.log(typeof lyricResults);
                     }
                     catch (err) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
                         resultsSection.innerHTML += `<thead>
@@ -339,7 +338,6 @@ function returnLyrics(trackID, goBack) {
 
                     }
                     //lyrics are printed into the results div.
-                    
                     resultsSection.innerHTML += `<thead> 
                                                 <tr>
                                                   <th scope="col">${trackName}</th>
@@ -350,6 +348,27 @@ function returnLyrics(trackID, goBack) {
                                                     <td class="lyrics">${lyricResults}<br>${lyricCopyright}</td>
                                                 </tr>
                                              </tbody>`;
+
+                    if (lyricResults == "" && lyricCopyright == "") {
+                        resetPage();
+                        if (goBack == 'getTrack') {
+                            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
+                        }
+                        else {
+                            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
+                        }
+                        resultsSection.innerHTML += `<thead>
+                                                <tr>
+                                                  <th scope="col">A problem has occurred</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <tr>
+                                                    <td>Sorry, there are no lyrics available for this song.</td>
+                                                </tr>
+                                             </tbody>`;
+                        return;
+                    }
                 }
             });
         }
