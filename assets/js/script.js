@@ -65,6 +65,19 @@ function getTrack() {
                                                 </tbody>`;
 
                 });
+                if (trackResults.length === 0) {
+                    resetPage(); //necessary to clear the table header already printed above.
+                    resultsSection.innerHTML += `<thead>
+                                                    <tr>
+                                                        <th scope="col">A problem has occurred</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sorry, no results were found.</td>
+                                                    </tr>
+                                                </tbody>`;
+                }
 
 
             },
@@ -178,7 +191,20 @@ function getAlbumList(artistID) {
                                                     </tr>
                                                 </tbody>`;
                 });
-
+                if (albumList.length === 0) {
+                    resetPage(); //necessary to clear the table header already printed above.
+                    backButton.innerHTML += `<button class="btn btn-secondary btn-srch" onclick="getArtist()"><i class="fas fa-chevron-left"></i> Go Back</button>`;
+                    resultsSection.innerHTML += `<thead>
+                                                    <tr>
+                                                        <th scope="col">A problem has occurred</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sorry, no results were found.</td>
+                                                    </tr>
+                                                </tbody>`;
+                }
 
 
 
@@ -229,7 +255,20 @@ function getTrackList(albumID) {
                                                     </tr>
                                                 </tbody>`;
                 });
-
+                if (trackResults.length === 0) {
+                    resetPage(); //necessary to clear the table header already printed above.
+                    backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getAlbumList(' + window['currentArtist'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
+                    resultsSection.innerHTML += `<thead>
+                                                    <tr>
+                                                        <th scope="col">A problem has occurred</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sorry, no results were found.</td>
+                                                    </tr>
+                                                </tbody>`;
+                }
 
             }
         }
@@ -243,48 +282,49 @@ function returnLyrics(trackID, goBack) {
     var trackName;
     if (goBack == 'getTrack') {
         backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
-    } else if (goBack == 'getTrackList') {
+    }
+    else if (goBack == 'getTrackList') {
         backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
     }
     $.ajax({
-            type: "GET",
-            data: {
-                apikey: "16099f064260947071709a4bc6421891",
-                track_id: trackID, //unique ID of the song
-                format: "jsonp",
-                callback: "jsonp_callback",
+        type: "GET",
+        data: {
+            apikey: "16099f064260947071709a4bc6421891",
+            track_id: trackID, //unique ID of the song
+            format: "jsonp",
+            callback: "jsonp_callback",
 
-            },
-            url: "https://api.musixmatch.com/ws/1.1/track.get",
-            dataType: "jsonp",
-            jsonpCallback: 'jsonp_callback',
-            contentType: 'application/json',
-            success: function(data) {
-                trackName = data.message.body.track.track_name; //creates a variable holding the name of the selected song for use in the table heading
-            },
-            complete: function() {
-                $.ajax({
-                    type: "GET",
-                    data: {
-                        apikey: "16099f064260947071709a4bc6421891",
-                        track_id: trackID, //unique ID of the song
-                        format: "jsonp",
-                        callback: "jsonp_callback",
+        },
+        url: "https://api.musixmatch.com/ws/1.1/track.get",
+        dataType: "jsonp",
+        jsonpCallback: 'jsonp_callback',
+        contentType: 'application/json',
+        success: function(data) {
+            trackName = data.message.body.track.track_name; //creates a variable holding the name of the selected song for use in the table heading
+        },
+        complete: function() {
+            $.ajax({
+                type: "GET",
+                data: {
+                    apikey: "16099f064260947071709a4bc6421891",
+                    track_id: trackID, //unique ID of the song
+                    format: "jsonp",
+                    callback: "jsonp_callback",
 
-                    },
-                    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
-                    dataType: "jsonp",
-                    jsonpCallback: 'jsonp_callback',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        console.log(data);
-                        
-                        try { //checks to make sure there are lyrics to return
-                            var lyricResults = data.message.body.lyrics.lyrics_body;
-                            var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
-                        }
-                        catch (err) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
-                            resultsSection.innerHTML += `<thead>
+                },
+                url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
+                dataType: "jsonp",
+                jsonpCallback: 'jsonp_callback',
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data);
+
+                    try { //checks to make sure there are lyrics to return
+                        var lyricResults = data.message.body.lyrics.lyrics_body;
+                        var lyricCopyright = data.message.body.lyrics.lyrics_copyright;
+                    }
+                    catch (err) { //if there are no lyrics to return, an error is printed and the rest of the function is aborted
+                        resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">A problem has occurred</th>
                                                 </tr>
@@ -294,11 +334,11 @@ function returnLyrics(trackID, goBack) {
                                                     <td>Sorry, there are no lyrics available for this song.</td>
                                                 </tr>
                                              </tbody>`;
-                            return;
+                        return;
 
-                        }
-                        //lyrics are printed into the results div.
-                        resultsSection.innerHTML += `<thead> 
+                    }
+                    //lyrics are printed into the results div.
+                    resultsSection.innerHTML += `<thead> 
                                                 <tr>
                                                   <th scope="col">${trackName}</th>
                                                 </tr>
@@ -308,9 +348,8 @@ function returnLyrics(trackID, goBack) {
                                                     <td>${lyricResults}<br>${lyricCopyright}</td>
                                                 </tr>
                                              </tbody>`;
-                    }
-                });
-            }
-        });
-    }
-
+                }
+            });
+        }
+    });
+}
