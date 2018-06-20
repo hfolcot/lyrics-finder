@@ -107,9 +107,7 @@ input {
 .results {
     margin-top: 25px;
     max-width: 50vw;
-
 }
-
 
 th,
 td {
@@ -117,14 +115,15 @@ td {
 }
 
 .lyrics {
-    white-space: pre-line;
+    white-space: pre-line; /*Allows the lyrice results string to display in the correct formatting*/
 }
 
 /*************************************************************Media Queries*/
 
 @media (max-width: 767px) {
     body {
-        background-repeat: repeat-y; /*added to resolve an issue with iOS where the background image will not stay fixed */ 
+        background-repeat: repeat-y;
+        /*added to resolve an issue with iOS where the background image will not stay fixed */
     }
     .page-title {
         text-align: center;
