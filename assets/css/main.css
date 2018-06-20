@@ -117,11 +117,6 @@ td {
 }
 
 
-.lyric-container {
-    border: 1px solid #978897;
-    text-align: center;
-}
-
 /*************************************************************Media Queries*/
 
 @media (max-width: 767px) {
