@@ -217,8 +217,9 @@ image displayed correctly.
 
 Another issue was found on iPhone where the background image was not remaining fixed 
 and wouldn't scroll with the page, leading to the page 'running out' of background 
-when a scrolling down a large amount of returned data. This was resolved by using 
-a media query to set the background to repeat on smaller screens.
+when a scrolling down a large amount of returned data. Research showed that this 
+is a known issue with iOS. This was resolved by using a media query to set the 
+background to repeat on smaller screens.
 
 
 #### Responsiveness
