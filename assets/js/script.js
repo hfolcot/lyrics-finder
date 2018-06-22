@@ -272,12 +272,16 @@ function getTrackList(albumID) {
 function returnLyrics(trackID, goBack) {
     resetPage();
     var trackName;
-    if (goBack == 'getTrack') {
-        backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
+
+    function createBackButton() {
+        if (goBack == 'getTrack') {
+            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
+        }
+        else {
+            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
+        }
     }
-    else {
-        backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
-    }
+    createBackButton();
     $.ajax({
         type: "GET",
         data: {
@@ -341,12 +345,7 @@ function returnLyrics(trackID, goBack) {
 
                     if (lyricResults == "" && lyricCopyright == "") {
                         resetPage();
-                        if (goBack == 'getTrack') {
-                            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrack()"><i class="fas fa-chevron-left"></i> Go Back</button>';
-                        }
-                        else {
-                            backButton.innerHTML += '<button class="btn btn-secondary btn-srch" onclick="getTrackList(' + window['currentAlbum'] + ')"><i class="fas fa-chevron-left"></i> Go Back</button>';
-                        }
+                        createBackButton();
                         resultsSection.innerHTML += `<thead>
                                                 <tr>
                                                   <th scope="col">A problem has occurred</th>
