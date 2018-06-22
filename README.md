@@ -21,7 +21,8 @@ The page is now live at https://hfolcot.github.io/lyrics-finder/
 
 The page uses Bootstrap 4.0.0 and makes use of its grid system and other styling.
 
-The page uses the Nunito Sans and Corben fonts from Google Fonts.
+The page uses the Nunito Sans and Corben fonts from Google Fonts, and also icons 
+from FontAwesome.
 
 My own further styling has been done within assets/css/main.css
 
@@ -35,6 +36,9 @@ format and so a JQuery AJAX request was required to get the data.
 These are the each of the stages the app can be at - the following numbers will 
 be used to describe at which [stage] each function is used and to which stage it 
 leads.
+
+There is also functionality within each stage to move back to the previous page, 
+via either the Clear Results button or a Go Back button.
 
 1. Main
 2. Main > Song Results
@@ -54,13 +58,13 @@ which value of radio button is checked and runs the relevant function based on t
 ### resetPage() [2, 3, 4, 5, 6, 7]
 
 This function is invoked at the beginning of all the following functions in order 
-to clear any results that may already be in the results container.
+to clear any data that may already be in the results container.
 
 ### getTrack() [1 > 2]
 
 This function is invoked by checkRadio() if the Song radio button was checked when 
 the user searched. The function makes an $.ajax request to https://api.musixmatch.com/ws/1.1/track.search 
-with the value that the user entered into the search box as a parameter for q_track.
+with the value that the user entered into the search box as the parameter q_track.
 If the request is successful, a variable trackResults is created which contains 
 the returned list of tracks. These are sorted by popularity of the artist as based 
 on Musixmatch's ratings system. Then for each item of this list, the name and artist 
@@ -81,19 +85,10 @@ results container in index.html, along with a button which gives the user an opt
 to view the albums by the selected artist. This works by passing the artist_id as 
 a parameter into the getAlbumList() function which is triggered on click.
 
-### returnLyrics() [2 > 3 AND 6 > 7]
-
-This function is invoked when any button within a list of songs is clicked. The 
-track ID of the selected song is passed through from the previous function. The 
-function uses two separate ajax calls. The first is used to get data from the track.get 
-in the API and plucks the track name from this so that it can be displayed as a title.
-A second call is then made to matcher.lyrics.get to return the lyrics themselves. 
-If there are no lyrics to return, a custom error message is displayed within the container element.
-
 
 ### getAlbumList() [4 > 5]
 
-This function runs similarly to the previous three functions. The artist_id is passed 
+This function runs similarly to the previous two functions. The artist_id is passed 
 into it from the getArtist() function and this is used to get the album data for 
 that artist. It is then printed to the container element as a list containing the
 name of each album and a button giving the option to view the track list for that 
@@ -106,12 +101,23 @@ The album_id is passed into this function and used to make a request to https://
 for the list of tracks on that album. This will then return the list of tracks with 
 the option to view the lyrics, again with a button as in getTrack().
 
+### returnLyrics() [2 > 3 AND 6 > 7]
+
+This function is invoked when any button within a list of songs is clicked. The 
+track ID of the selected song is passed through from the previous function. The 
+function uses two separate ajax calls. The first is used to get data from the track.get 
+in the API and plucks the track name from this so that it can be displayed as a title.
+A second call is then made to matcher.lyrics.get to return the lyrics themselves. 
+If there are no lyrics to return, a custom error message is displayed within the 
+container element.
+
 ## Design
 
 The layout of the page has been kept very basic to keep the methods obvious and 
 simple. A dark background image has been used which is gentle on the eye and doesn't
 draw the user's attention. The colour scheme tries to match this image as much as 
 possible and was created with Coolors.co.
+The data is returned in a table with appropriate headers.
 
 ## Testing
 
@@ -131,11 +137,12 @@ text within the results container, at which point the test failed.
 Whilst testing, there was an interesting issue encountered where no lyrics were 
 being returned for any song containing double or single quote marks. On investigation 
 it appeared that the issue was caused by the function trying to pass a song name 
-into a new function (getLyrics), but when quotes were present in the song name, it was reading 
-this as the end of the parameter and erroring because there was no closing parenthesis.
-This was resolved by editing getLyrics (renamed during this process to returnLyrics) 
-so that it retrieved the song name itself in a separate call rather than passing 
-it through from the previous function.
+into a new function (getLyrics, renamed during this process 
+to returnLyrics), but when quotes were present in the song name, it 
+was reading this as the end of the parameter and erroring because there was no closing 
+parenthesis. This was resolved by editing getLyrics so that it retrieved the song 
+name itself in a separate call rather than passing it through from the previous 
+function.
 
 
 Each stage of testing was re-done after any new functionality changes.
