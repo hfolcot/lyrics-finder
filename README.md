@@ -215,6 +215,11 @@ correctly. This was due to the position of the script element within the HTML co
 Once it was moved to the end of the body rather than in the head the background 
 image displayed correctly.
 
+Another issue was found on iPhone where the background image was not remaining fixed 
+and wouldn't scroll with the page, leading to the page 'running out' of background 
+when a scrolling down a large amount of returned data. This was resolved by using 
+a media query to set the background to repeat on smaller screens.
+
 
 #### Responsiveness
 
